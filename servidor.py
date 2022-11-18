@@ -6,7 +6,9 @@ import colorama
 HOST = gethostname()
 PORT = 55551
 MAX_QUEUE = 5
+BUFFER = 1024
 
+cmd.clear_terminal_color()
 cmd.clear_screen()
 cmd.server_loading()
 cmd.clear_screen()
@@ -23,16 +25,20 @@ currentClients = 0
 
 while True:
     clientSocket, address = server.accept()
-    print(colorama.Fore.LIGHTGREEN_EX + f'+ Conexão estabelecida com o cliente: {address}')
+    print(colorama.Fore.LIGHTGREEN_EX +
+          f'+ Conexão estabelecida com o cliente: {address}')
+    cmd.clear_terminal_color()
     clientSocket.send('Conexão estabelecida com o servidor'.encode())
     while True:
-        msg = clientSocket.recv(1024)
+        msg = clientSocket.recv(BUFFER)
         msg = msg.decode()
 
         if msg == 'sair':
-            print(colorama.Fore.LIGHTRED_EX + f'- Conexão encerrada com o cliente: {address}')
+            print(colorama.Fore.LIGHTRED_EX +
+                  f'- Conexão encerrada com o cliente: {address}')
+            cmd.clear_terminal_color()
             clientSocket.send('close'.encode())
-            # clientSocket.close()
+            clientSocket.close()
             break
 
         fraseInterpretada = ia.interpreta_frase(msg)
