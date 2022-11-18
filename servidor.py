@@ -6,7 +6,7 @@ import colorama
 HOST = gethostname()
 PORT = 55551
 MAX_QUEUE = 5
-BUFFER = 1024
+BUFFER_SIZE = 1024
 
 cmd.clear_terminal_color()
 cmd.clear_screen()
@@ -30,7 +30,7 @@ while True:
     cmd.clear_terminal_color()
     clientSocket.send('Conexão estabelecida com o servidor'.encode())
     while True:
-        msg = clientSocket.recv(BUFFER)
+        msg = clientSocket.recv(BUFFER_SIZE)
         msg = msg.decode()
 
         if msg == 'sair':

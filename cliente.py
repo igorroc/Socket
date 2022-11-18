@@ -3,7 +3,7 @@ import utils.terminal as cmd
 
 HOST = gethostname()
 PORT = 55551
-BUFFER = 1024
+BUFFER_SIZE = 1024
 
 
 cmd.clear_screen()
@@ -17,7 +17,7 @@ server.connect((HOST, PORT))
 
 
 while True:
-    msg = server.recv(BUFFER)
+    msg = server.recv(BUFFER_SIZE)
 
     if msg.decode() == 'close':
         print('Conexão encerrada com o servidor')
