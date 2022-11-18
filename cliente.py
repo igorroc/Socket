@@ -28,6 +28,12 @@ def main():
         print(msg.decode())
         msg = server.recv(BUFFER_SIZE)
 
+    # Captura o nome do usuário
+    print("\n")
+    print("Digite seu nome de usuário:")
+    nome = input("> ")
+    server.send(nome.encode())
+
     print('\n')
     print("No que você está pensando?")
     # Loop de interação com o servidor
