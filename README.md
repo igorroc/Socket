@@ -68,8 +68,8 @@ Para executar o projeto, você precisa executar o arquivo **servidor.py** em um 
 
 ```bash
 
-./servidor.py
+python ./server.py
 
-./cliente.py
+python ./client.py
 
 ```
