@@ -32,10 +32,10 @@ def main():
     print("\n")
     print("Digite seu nome de usuário:")
     nome = input("> ")
-    server.send(nome.encode())
+    server.send(f'name:{nome}'.encode())
 
     print('\n')
-    print("No que você está pensando?")
+    print(f"No que você está pensando, {nome}?")
     # Loop de interação com o servidor
     while msg.decode() != 'close':
         frase = input("> ")

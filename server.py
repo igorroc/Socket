@@ -22,7 +22,7 @@ server = socket(AF_INET, SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen(MAX_QUEUE)
 
-currentClients = 0
+currentClients = []
 
 
 def new_client_instructions(clientSocket):
@@ -47,7 +47,16 @@ while True:
     print(colorama.Fore.LIGHTGREEN_EX +
           f'+ Conexão estabelecida com o cliente: {address}')
     cmd.clear_terminal_color()
+
     new_client_instructions(clientSocket)
+
+    msg = clientSocket.recv(BUFFER_SIZE)
+    msg = msg.decode().split('name:')[1]
+    print(f'Nome do cliente: {msg}')
+
+    currentClients.append(
+        {"socket": clientSocket, "address": address, "username": msg})
+
     while True:
         msg = clientSocket.recv(BUFFER_SIZE)
         msg = msg.decode()
@@ -58,6 +67,11 @@ while True:
             cmd.clear_terminal_color()
             clientSocket.send('close'.encode())
             clientSocket.close()
+            
+            for client in currentClients:
+                if client['socket'] == clientSocket:
+                    currentClients.remove(client)
+                    
             break
 
         fraseInterpretada = ia.interpreta_frase(msg)
