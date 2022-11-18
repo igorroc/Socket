@@ -2,6 +2,7 @@ from socket import *
 import utils.inteligencia as ia
 import utils.terminal as cmd
 import colorama
+import time
 
 HOST = gethostname()
 PORT = 55551
@@ -23,12 +24,30 @@ server.listen(MAX_QUEUE)
 
 currentClients = 0
 
+
+def new_client_instructions(clientSocket):
+    clientSocket.send(bytes(colorama.Fore.LIGHTGREEN_EX +
+                      '+ Conexão estabelecida com o servidor', 'utf-8'))
+    time.sleep(0.1)
+    clientSocket.send(bytes(colorama.Fore.RESET, 'utf-8'))
+    clientSocket.send('Bem vindo(a) ao Analisador de Emoções!'.encode())
+    time.sleep(0.1)
+    clientSocket.send(
+        'Para utilizar, basta digitar uma frase, e o servidor te responderá com o sentimento referente.'.encode())
+    time.sleep(0.1)
+    clientSocket.send(
+        'Caso você deseje encerrar a conexão, basta digitar "sair"'.encode())
+    time.sleep(0.2)
+
+    clientSocket.send('start'.encode())
+
+
 while True:
     clientSocket, address = server.accept()
     print(colorama.Fore.LIGHTGREEN_EX +
           f'+ Conexão estabelecida com o cliente: {address}')
     cmd.clear_terminal_color()
-    clientSocket.send('Conexão estabelecida com o servidor'.encode())
+    new_client_instructions(clientSocket)
     while True:
         msg = clientSocket.recv(BUFFER_SIZE)
         msg = msg.decode()
