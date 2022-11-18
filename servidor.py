@@ -25,12 +25,12 @@ while True:
     while True:
         msg = clientSocket.recv(1024)
         msg = msg.decode()
-        print(msg)
+
         if msg == 'sair':
             print(colorama.Fore.LIGHTRED_EX + f'- Conexão encerrada com o cliente: {address}')
             clientSocket.send('close'.encode())
             # clientSocket.close()
             break
-        saidaStem
-        extraido = ia.extratorPalavras(saidaStem)
-        print(ia.classificador.classify(extraido))
+
+        fraseInterpretada = ia.interpreta_frase(msg)
+        clientSocket.send(fraseInterpretada.encode())
