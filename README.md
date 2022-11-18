@@ -2,9 +2,13 @@
 
 ## Discentes
 
--   Igor Lima Rocha
--   Isaac Nascimento Lima
--   João Victor Oliveira Rupp
+-   [Igor Lima Rocha](https://github.com/igorroc)
+-   [Isaac Nascimento Lima](https://github.com/inlima)
+-   [João Victor Oliveira Rupp](https://github.com/jvrupp)
+
+## Sobre o projeto
+
+O projeto consiste em um analisador de emoções, que tem como objetivo identificar a emoção de uma pessoa através de uma frase enviada por ela. O projeto foi desenvolvido em Python, utilizando a biblioteca NLTK (Natural Language Tool Kit) para a análise de sentimentos.
 
 ## Como instalar/configurar
 
