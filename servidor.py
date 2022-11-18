@@ -1,6 +1,7 @@
 from socket import *
 import utils.inteligencia as ia
 import utils.terminal as cmd
+import colorama
 
 HOST = gethostname()
 PORT = 55551
@@ -18,9 +19,11 @@ server = socket(AF_INET, SOCK_STREAM)
 server.bind((HOST, PORT))
 server.listen(MAX_QUEUE)
 
+currentClients = 0
+
 while True:
     clientSocket, address = server.accept()
-    print(f'Conexão estabelecida com o cliente: {address}')
+    print(colorama.Fore.LIGHTGREEN_EX + f'+ Conexão estabelecida com o cliente: {address}')
     clientSocket.send('Conexão estabelecida com o servidor'.encode())
     while True:
         msg = clientSocket.recv(1024)
