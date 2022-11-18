@@ -44,7 +44,9 @@ def extratorPalavras(documento):
     return saida
 
 
-listaTotalPalavras = buscaPalavras(aplicaStemmer(db.BASE))
+BASE = db.get_base()
+
+listaTotalPalavras = buscaPalavras(aplicaStemmer(BASE))
 len(listaTotalPalavras)
 
 frequencia = buscaFrequencia(listaTotalPalavras)
@@ -52,7 +54,7 @@ frequencia.most_common(8)
 
 PU = palavrasUnicas(frequencia)
 
-frasesComStem = aplicaStemmer(db.BASE)
+frasesComStem = aplicaStemmer(BASE)
 baseCompleta = nltk.classify.apply_features(extratorPalavras, frasesComStem)
 classificador = nltk.NaiveBayesClassifier.train(baseCompleta)
 
