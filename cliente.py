@@ -1,14 +1,22 @@
 from socket import *
+import utils.terminal as cmd
 
-host=gethostname()
-port = 55551
+HOST = gethostname()
+PORT = 55551
 
-print(f'HOST: {host},PORT:{port}')
 
-cli = socket(AF_INET,SOCK_STREAM)
-cli.connect((host,port))
+cmd.clear_screen()
+print('Tentando se conectar ao servidor...')
+print(f'HOST: {HOST},PORT:{PORT}')
+cmd.delay_loading(5)
+cmd.clear_screen()
 
+server = socket(AF_INET, SOCK_STREAM)
+server.connect((HOST, PORT))
+
+msg = server.recv(1024)
+print(msg.decode())
 
 while True:
     msg = input("Digite: ")
-    cli.send(msg.encode())
+    server.send(msg.encode())
