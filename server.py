@@ -55,19 +55,23 @@ while True:
 
     msg = clientSocket.recv(BUFFER_SIZE)
     msg = msg.decode().split('name:')[1]
-    print(f'Nome do cliente: {msg}')
+    print(colorama.Fore.LIGHTCYAN_EX +
+          '[NEW_USER]: ' + colorama.Fore.RESET + msg)
 
     currentClients.append(
         {"socket": clientSocket, "address": address, "username": msg})
 
     while True:
         msg = clientSocket.recv(BUFFER_SIZE)
-        msg = msg.decode()
+        msg = msg.decode().split(':')
+        user = msg[0]
+        msg = msg[1]
 
         if msg == 'sair':
-            print(colorama.Fore.LIGHTRED_EX +
-                  f'- Conexão encerrada com o cliente: {address}')
-            cmd.clear_terminal_color()
+            print(colorama.Fore.LIGHTRED_EX
+                  + '[LEFT_USER]: ' + colorama.Fore.RESET
+                  + f'{user} ' + colorama.Style.DIM
+                  + f'{address}' + colorama.Style.RESET_ALL)
             clientSocket.send('close'.encode())
             clientSocket.close()
 
@@ -79,3 +83,10 @@ while True:
 
         fraseInterpretada = ia.interpreta_frase(msg)
         clientSocket.send(fraseInterpretada.encode())
+        print(colorama.Fore.LIGHTMAGENTA_EX
+              + '[REQUEST]: ' + colorama.Fore.RESET +
+              colorama.Fore.LIGHTCYAN_EX
+              + f'@{user} ' + colorama.Fore.RESET + colorama.Style.DIM
+              + f'\'{msg}\' ' + colorama.Style.RESET_ALL
+              + colorama.Back.MAGENTA + f' {fraseInterpretada} '
+              + colorama.Back.RESET)
