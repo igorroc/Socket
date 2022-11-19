@@ -70,11 +70,11 @@ while True:
             cmd.clear_terminal_color()
             clientSocket.send('close'.encode())
             clientSocket.close()
-            
+
             for client in currentClients:
                 if client['socket'] == clientSocket:
                     currentClients.remove(client)
-                    
+
             break
 
         fraseInterpretada = ia.interpreta_frase(msg)
