@@ -1,4 +1,5 @@
 from socket import *
+import threading
 import utils.inteligencia as ia
 import utils.terminal as cmd
 import colorama
@@ -45,22 +46,7 @@ def new_client_instructions(clientSocket):
     clientSocket.send('start'.encode())
 
 
-while True:
-    clientSocket, address = server.accept()
-    print(colorama.Fore.LIGHTGREEN_EX +
-          f'+ Conexão estabelecida com o cliente: {address}')
-    cmd.clear_terminal_color()
-
-    new_client_instructions(clientSocket)
-
-    msg = clientSocket.recv(BUFFER_SIZE)
-    msg = msg.decode().split('name:')[1]
-    print(colorama.Fore.LIGHTCYAN_EX +
-          '[NEW_USER]: ' + colorama.Fore.RESET + msg)
-
-    currentClients.append(
-        {"socket": clientSocket, "address": address, "username": msg})
-
+def handle_messages(connection):
     while True:
         msg = clientSocket.recv(BUFFER_SIZE)
         msg = msg.decode().split(':')
@@ -90,3 +76,25 @@ while True:
               + f'\'{msg}\' ' + colorama.Style.RESET_ALL
               + colorama.Back.MAGENTA + f' {fraseInterpretada} '
               + colorama.Back.RESET)
+
+    connection.close()
+
+
+while True:
+    clientSocket, address = server.accept()
+    print(colorama.Fore.LIGHTGREEN_EX
+          + f'+ Conexão estabelecida com o cliente: {address}'
+          + colorama.Fore.RESET)
+
+    new_client_instructions(clientSocket)
+
+    msg = clientSocket.recv(BUFFER_SIZE)
+    msg = msg.decode().split('name:')[1]
+    print(colorama.Fore.LIGHTCYAN_EX +
+          '[NEW_USER]: ' + colorama.Fore.RESET + msg)
+
+    currentClients.append(
+        {"socket": clientSocket, "address": address, "username": msg})
+
+    thread = threading.Thread(target=handle_messages, args=[clientSocket])
+    thread.start()
