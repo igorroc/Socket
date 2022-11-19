@@ -16,7 +16,7 @@ def progress_bar(progress, total, color=colorama.Fore.YELLOW):
 
 
 def clear_terminal_color():
-    print(colorama.Fore.RESET)
+    print(colorama.Fore.RESET + colorama.Back.RESET + colorama.Style.RESET_ALL)
 
 
 def delay_loading(delay):
