@@ -9,6 +9,8 @@ BUFFER_SIZE = 1024
 
 def main():
     cmd.clear_screen()
+    HOST = input("Digite o host que deseja conectar: ")
+    PORT = int(input("Digite a porta que deseja conectar: "))
     print('Tentando se conectar ao servidor...')
     print(f'HOST: {HOST},PORT:{PORT}')
     cmd.delay_loading(10)

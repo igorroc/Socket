@@ -11,6 +11,9 @@ BUFFER_SIZE = 1024
 
 cmd.clear_terminal_color()
 cmd.clear_screen()
+
+PORT = int(input("Digite a porta que deseja utilizar: "))
+
 cmd.server_loading()
 cmd.clear_screen()
 
