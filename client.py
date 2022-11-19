@@ -33,7 +33,7 @@ def main():
     # Captura o nome do usuário
     print("\n")
     print("Digite seu nome de usuário:")
-    USER = input(colorama.Fore.MAGENTA +
+    USER = input(colorama.Fore.LIGHTCYAN_EX +
                  " ▶ " + colorama.Fore.RESET)
     server.send(f'name:{USER}'.encode())
 
@@ -41,14 +41,14 @@ def main():
     print(f"No que você está pensando, {USER}?")
     # Loop de interação com o servidor
     while msg.decode() != 'close':
-        frase = input(colorama.Fore.MAGENTA +
+        frase = input(colorama.Fore.LIGHTCYAN_EX +
                       " ▶ " + colorama.Fore.RESET)
         server.send(f'{USER}:{frase}'.encode())
 
         msg = server.recv(BUFFER_SIZE)
         if msg.decode() != 'close':
             print('{:>40}'.format(msg.decode()) +
-                  colorama.Fore.GREEN + ' ◀' + colorama.Fore.RESET)
+                  colorama.Fore.LIGHTMAGENTA_EX + ' ◀' + colorama.Fore.RESET)
 
     print('\n')
     print(colorama.Fore.LIGHTRED_EX + f'- Conexão encerrada com o servidor')
