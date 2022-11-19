@@ -31,16 +31,16 @@ currentClients = []
 def new_client_instructions(clientSocket):
     clientSocket.send(bytes(colorama.Fore.LIGHTGREEN_EX +
                       '+ Conexão estabelecida com o servidor', 'utf-8'))
-    time.sleep(0.1)
+    time.sleep(0.2)
     clientSocket.send(bytes(colorama.Fore.RESET, 'utf-8'))
     clientSocket.send('Bem vindo(a) ao Analisador de Emoções!'.encode())
-    time.sleep(0.1)
+    time.sleep(0.2)
     clientSocket.send(
         'Para utilizar, basta digitar uma frase, e o servidor te responderá com o sentimento referente.'.encode())
-    time.sleep(0.1)
-    clientSocket.send(
-        'Caso você deseje encerrar a conexão, basta digitar "sair"'.encode())
     time.sleep(0.2)
+    clientSocket.send(
+        'Caso você deseje encerrar a conexão, basta digitar \'sair\''.encode())
+    time.sleep(0.4)
 
     clientSocket.send('start'.encode())
 
