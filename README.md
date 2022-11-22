@@ -34,10 +34,14 @@ Dentro da pasta do projeto, você precisa configurar o ambiente virtual. Para is
 python -m venv venv
 ```
 
-Após isso, você precisa ativar o ambiente virtual. Para isso, execute o comando abaixo:
+Após isso, você precisa ativar o ambiente virtual. Para isso, execute o comando abaixo :
 
 ```bash
+# No Windows:
 .\venv\Scripts\Activate.ps1
+
+# No Linux:
+source ./venv/bin/activate
 ```
 
 E então, você pode instalar as dependências do projeto. Para isso, execute o comando abaixo:
