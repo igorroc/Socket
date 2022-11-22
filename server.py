@@ -1,9 +1,8 @@
 from socket import *
 import threading
-import utils.inteligencia as ia
 import utils.terminal as cmd
 import colorama
-import time
+import utils.threads as ServerThreads
 
 HOST = gethostname()
 PORT = 55551
@@ -29,72 +28,32 @@ server.listen(MAX_QUEUE)
 currentClients = []
 
 
-def new_client_instructions(clientSocket):
-    clientSocket.send(bytes(colorama.Fore.LIGHTGREEN_EX +
-                      '+ Conexão estabelecida com o servidor', 'utf-8'))
-    time.sleep(0.2)
-    clientSocket.send(bytes(colorama.Fore.RESET, 'utf-8'))
-    clientSocket.send('Bem vindo(a) ao Analisador de Emoções!'.encode())
-    time.sleep(0.2)
-    clientSocket.send(
-        'Para utilizar, basta digitar uma frase, e o servidor te responderá com o sentimento referente.'.encode())
-    time.sleep(0.2)
-    clientSocket.send(
-        'Caso você deseje encerrar a conexão, basta digitar \'sair\''.encode())
-    time.sleep(0.4)
-
-    clientSocket.send('start'.encode())
-
-
-def handle_messages(connection):
+try:
     while True:
+        clientSocket, address = server.accept()
+        print(
+            colorama.Fore.LIGHTGREEN_EX +
+            f'+ Conexão estabelecida com o cliente: {address}'
+            + colorama.Fore.RESET
+        )
+
+        ServerThreads.new_client_instructions(clientSocket)
+
         msg = clientSocket.recv(BUFFER_SIZE)
-        msg = msg.decode().split(':')
-        user = msg[0]
-        msg = msg[1]
+        msg = msg.decode().split('name:')[1]
+        print(
+            colorama.Fore.LIGHTCYAN_EX +
+            '[NEW_USER]: '
+            + colorama.Fore.RESET
+            + msg
+        )
 
-        if msg == 'sair':
-            print(colorama.Fore.LIGHTRED_EX
-                  + '[LEFT_USER]: ' + colorama.Fore.RESET
-                  + f'{user} ' + colorama.Style.DIM
-                  + f'{address}' + colorama.Style.RESET_ALL)
-            clientSocket.send('close'.encode())
-            clientSocket.close()
+        currentClients.append(
+            {"socket": clientSocket, "address": address, "username": msg})
 
-            for client in currentClients:
-                if client['socket'] == clientSocket:
-                    currentClients.remove(client)
-
-            break
-
-        fraseInterpretada = ia.interpreta_frase(msg)
-        clientSocket.send(fraseInterpretada.encode())
-        print(colorama.Fore.LIGHTMAGENTA_EX
-              + '[REQUEST]: ' + colorama.Fore.RESET +
-              colorama.Fore.LIGHTCYAN_EX
-              + f'@{user} ' + colorama.Fore.RESET + colorama.Style.DIM
-              + f'\'{msg}\' ' + colorama.Style.RESET_ALL
-              + colorama.Back.MAGENTA + f' {fraseInterpretada} '
-              + colorama.Back.RESET)
-
-    connection.close()
-
-
-while True:
-    clientSocket, address = server.accept()
-    print(colorama.Fore.LIGHTGREEN_EX
-          + f'+ Conexão estabelecida com o cliente: {address}'
-          + colorama.Fore.RESET)
-
-    new_client_instructions(clientSocket)
-
-    msg = clientSocket.recv(BUFFER_SIZE)
-    msg = msg.decode().split('name:')[1]
-    print(colorama.Fore.LIGHTCYAN_EX +
-          '[NEW_USER]: ' + colorama.Fore.RESET + msg)
-
-    currentClients.append(
-        {"socket": clientSocket, "address": address, "username": msg})
-
-    thread = threading.Thread(target=handle_messages, args=[clientSocket])
-    thread.start()
+        thread = threading.Thread(
+            target=ServerThreads.handle_messages, args=[clientSocket, address])
+        thread.start()
+except KeyboardInterrupt:
+    print('Servidor encerrado.')
+    server.close()
