@@ -20,8 +20,10 @@ def main():
         server = socket(AF_INET, SOCK_STREAM)
         server.connect((HOST, PORT))
     except:
-        print(colorama.Fore.LIGHTRED_EX +
-              '\n- Não foi possível se conectar ao servidor. Ele está ativo?')
+        print(
+            colorama.Fore.LIGHTRED_EX +
+            '\n- Não foi possível se conectar ao servidor. Ele está ativo?'
+        )
         return cmd.clear_terminal_color()
 
     # Instruções para o cliente
@@ -33,27 +35,33 @@ def main():
     # Captura o nome do usuário
     print("\n")
     print("Digite seu nome de usuário:")
-    USER = input(colorama.Fore.LIGHTCYAN_EX +
-                 " ▶ " + colorama.Fore.RESET)
+    USER = input(
+        colorama.Fore.LIGHTCYAN_EX + " ▶ " + colorama.Fore.RESET
+    )
     server.send(f'name:{USER}'.encode())
 
     print('\n')
     print(f"No que você está pensando, {USER}?")
     # Loop de interação com o servidor
     while msg.decode() != 'close':
-        frase = input(colorama.Fore.LIGHTCYAN_EX +
-                      " ▶ " + colorama.Fore.RESET)
+        frase = input(
+            colorama.Fore.LIGHTCYAN_EX +
+            " ▶ " + colorama.Fore.RESET
+        )
         server.send(f'{USER}:{frase}'.encode())
 
         msg = server.recv(BUFFER_SIZE)
         if msg.decode() != 'close':
-            print('{:>40}'.format(msg.decode()) +
-                  colorama.Fore.LIGHTMAGENTA_EX + ' ◀' + colorama.Fore.RESET)
+            print(
+                '{:>40}'.format(msg.decode()) +
+                colorama.Fore.LIGHTMAGENTA_EX + ' ◀' + colorama.Fore.RESET
+            )
 
     print('\n')
     print(colorama.Fore.LIGHTRED_EX + f'- Conexão encerrada com o servidor')
     server.close()
     cmd.clear_terminal_color()
+    input("Aperte <Enter> para finalizar...")
 
 
 main()
