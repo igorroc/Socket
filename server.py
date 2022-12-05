@@ -19,11 +19,11 @@ cmd.clear_screen()
 
 print(
     '↪ Servidor iniciado no host: ' +
-    colorama.Back.LIGHTCYAN_EX + f' {HOST} ' + colorama.Back.RESET
+    colorama.Back.LIGHTCYAN_EX + colorama.Fore.BLACK + f' {HOST} ' + colorama.Back.RESET + colorama.Fore.RESET
 )
 print(
     '↪ Utilizando a porta: ' +
-    colorama.Back.LIGHTMAGENTA_EX + f' {PORT} ' + colorama.Back.RESET
+    colorama.Back.LIGHTMAGENTA_EX + colorama.Fore.BLACK + f' {PORT} ' + colorama.Back.RESET + colorama.Fore.RESET
 )
 
 print('↪ Aguardando conexões...')
