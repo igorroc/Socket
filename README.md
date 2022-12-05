@@ -1,5 +1,5 @@
 # Analisador de Emoções
-teste
+Este projeto consiste em uma análise de sentimento realizada sob algoritmos de Machine learning por intermédio de Sockets TCP, sendo que o usuário digita uma frase e o sistema interpreta qual o sentimento daquela frase diante de um conjunto de dados e atribui um sentimento em sua saída.
 
 ## Discentes
 
