@@ -1,5 +1,6 @@
 # Analisador de Emoções
-Este projeto consiste em uma análise de sentimento realizada sob algoritmos de Machine learning por intermédio de Sockets TCP, sendo que o usuário digita uma frase e o sistema interpreta qual o sentimento daquela frase diante de um conjunto de dados e atribui um sentimento em sua saída.
+
+
 
 ## Discentes
 
@@ -9,9 +10,7 @@ Este projeto consiste em uma análise de sentimento realizada sob algoritmos de 
 
 ## Sobre o projeto
 
-O projeto consiste em um analisador de emoções, que tem como objetivo identificar a emoção de uma pessoa através de uma frase enviada por ela. O projeto foi desenvolvido em Python, utilizando a biblioteca NLTK (Natural Language Tool Kit) para a análise de sentimentos.
-
-## Como instalar/configurar
+Este projeto consiste em uma análise de sentimento realizada sob algoritmos de Machine learning por intermédio de Sockets TCP, sendo que o usuário digita uma frase e o sistema interpreta qual o sentimento daquela frase diante de um conjunto de dados e atribui um sentimento em sua saída.O projeto foi desenvolvido em Python, utilizando a biblioteca NLTK (Natural Language Tool Kit) para a análise de sentimentos.
 
 Antes de tudo, você precisa do **Python 3.8** instalado na sua máquina. Para isso, siga esse link:
 
